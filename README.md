@@ -1,6 +1,20 @@
 # 📓 Personal Diary Management System
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-personal--diary--uecw.onrender.com-brightgreen)](https://personal-diary-uecw.onrender.com)
+[![Backend API](https://img.shields.io/badge/Backend%20API-diary--backend--24ef.onrender.com-blue)](https://diary-backend-24ef.onrender.com)
+[![GitHub](https://img.shields.io/badge/GitHub-PERSONAL--DIARY--MANAGEMENT-black)](https://github.com/AkhileshYadav117/PERSONAL-DIARY-MANAGEMENT)
+
 A full-stack Personal Diary Management System built as a **Java college mini-project**, extended into a modern web application.
+
+## 🚀 Live Deployment
+
+| Service | URL |
+|---------|-----|
+| 🌐 **Web App (Frontend)** | https://personal-diary-uecw.onrender.com |
+| ⚙️ **REST API (Backend)** | https://diary-backend-24ef.onrender.com |
+| 🗄️ **Database** | PostgreSQL on Render (Cloud) |
+
+> ⚠️ **Note:** Free tier — first request may take 30-50 seconds to wake up the backend.
 
 ---
 
