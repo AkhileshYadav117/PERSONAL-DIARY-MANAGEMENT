@@ -11,20 +11,25 @@ import java.sql.Statement;
 public class DatabaseConnection {
 
     // Environment variables for deployment (fallback to local for development)
-    private static final String URL      = System.getenv("DB_URL")      != null
+    private static final String URL  = System.getenv("DB_URL")  != null
         ? System.getenv("DB_URL")
         : "jdbc:postgresql://localhost:5432/diary_db";
-    private static final String USER     = System.getenv("DB_USER")     != null
+    private static final String USER = System.getenv("DB_USER") != null
         ? System.getenv("DB_USER")
         : "postgres";
-    private static final String PASSWORD = System.getenv("DB_PASSWORD") != null
-        ? System.getenv("DB_PASSWORD")
-        : "Akhilesh@112";
+    // DB_PASSWORD must be supplied via environment variable — no hard-coded fallback
+    private static final String PASSWORD = System.getenv("DB_PASSWORD");
 
     private static Connection connection = null;
 
     // Get database connection (Singleton pattern)
     public static Connection getConnection() throws SQLException {
+        if (PASSWORD == null || PASSWORD.isEmpty()) {
+            throw new IllegalStateException(
+                "[DB CONFIG ERROR] Environment variable DB_PASSWORD is not set. " +
+                "Set it before starting the server."
+            );
+        }
         if (connection == null || connection.isClosed()) {
             System.out.println("[DB] Connecting to PostgreSQL...");
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
