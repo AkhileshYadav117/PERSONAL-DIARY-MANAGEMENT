@@ -6,11 +6,19 @@ import java.sql.SQLException;
 
 // JDBC: Java Database Connectivity
 // This class connects Core Java to PostgreSQL
+// Uses environment variables for secure deployment (Render/Cloud)
 public class DatabaseConnection {
 
-    private static final String URL      = "jdbc:postgresql://localhost:5432/diary_db";
-    private static final String USER     = "postgres";
-    private static final String PASSWORD = "Akhilesh@112";
+    // Environment variables for deployment (fallback to local for development)
+    private static final String URL      = System.getenv("DB_URL")      != null
+        ? System.getenv("DB_URL")
+        : "jdbc:postgresql://localhost:5432/diary_db";
+    private static final String USER     = System.getenv("DB_USER")     != null
+        ? System.getenv("DB_USER")
+        : "postgres";
+    private static final String PASSWORD = System.getenv("DB_PASSWORD") != null
+        ? System.getenv("DB_PASSWORD")
+        : "Akhilesh@112";
 
     private static Connection connection = null;
 
