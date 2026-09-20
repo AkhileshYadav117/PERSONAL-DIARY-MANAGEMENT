@@ -22,6 +22,9 @@ public class Main {
         }
         System.out.println("[INFO] Database connected!");
 
+        // Auto-create tables if not exist (important for fresh deployments)
+        DatabaseConnection.initializeTables();
+
         // Read PORT from environment (Render sets this automatically)
         int port = 8080;
         String portEnv = System.getenv("PORT");

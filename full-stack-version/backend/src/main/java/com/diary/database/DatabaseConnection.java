@@ -3,6 +3,7 @@ package com.diary.database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 // JDBC: Java Database Connectivity
 // This class connects Core Java to PostgreSQL
@@ -30,6 +31,46 @@ public class DatabaseConnection {
             System.out.println("[DB] Connected to diary_db successfully!");
         }
         return connection;
+    }
+
+    // Auto-create tables if they don't exist (runs on startup)
+    public static void initializeTables() {
+        try {
+            Connection conn = getConnection();
+            Statement stmt = conn.createStatement();
+
+            // Create users table
+            stmt.execute(
+                "CREATE TABLE IF NOT EXISTS users (" +
+                "  id SERIAL PRIMARY KEY," +
+                "  name VARCHAR(100) NOT NULL," +
+                "  email VARCHAR(150) UNIQUE NOT NULL," +
+                "  password_hash TEXT NOT NULL," +
+                "  created_at TIMESTAMP DEFAULT NOW()" +
+                ")"
+            );
+
+            // Create diary_entries table
+            stmt.execute(
+                "CREATE TABLE IF NOT EXISTS diary_entries (" +
+                "  id SERIAL PRIMARY KEY," +
+                "  user_id INT REFERENCES users(id) ON DELETE CASCADE," +
+                "  title VARCHAR(200) NOT NULL," +
+                "  content TEXT," +
+                "  mood VARCHAR(50) DEFAULT 'Happy'," +
+                "  category VARCHAR(50) DEFAULT 'Personal'," +
+                "  is_favorite BOOLEAN DEFAULT false," +
+                "  entry_date DATE DEFAULT CURRENT_DATE," +
+                "  created_at TIMESTAMP DEFAULT NOW()," +
+                "  updated_at TIMESTAMP DEFAULT NOW()" +
+                ")"
+            );
+
+            stmt.close();
+            System.out.println("[DB] Tables initialized successfully!");
+        } catch (SQLException e) {
+            System.out.println("[DB ERROR] Table init failed: " + e.getMessage());
+        }
     }
 
     // Test connection
