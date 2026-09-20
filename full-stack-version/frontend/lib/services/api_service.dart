@@ -3,11 +3,10 @@ import 'package:http/http.dart' as http;
 import '../models/diary_entry.dart';
 
 class ApiService {
-  // LOCAL development: http://localhost:8080
-  // RENDER deployment: https://your-backend-name.onrender.com
+  // Production backend on Render
   static const String base = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'http://localhost:8080',
+    defaultValue: 'https://diary-backend-24ef.onrender.com',
   );
 
   static Future<Map<String, dynamic>> register(String name, String email, String password) async {
