@@ -278,8 +278,3 @@ All backup files are saved in `full-stack-version/backend/backups/`
 
 ---
 
-## 👨‍💻 Author
-
-**Akhilesh Yadav**  
-2nd Year CSE (AI/ML)  
-Mini Project — Personal Diary Management System
