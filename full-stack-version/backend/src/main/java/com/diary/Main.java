@@ -22,7 +22,15 @@ public class Main {
         }
         System.out.println("[INFO] Database connected!");
 
-        HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
+        // Read PORT from environment (Render sets this automatically)
+        int port = 8080;
+        String portEnv = System.getenv("PORT");
+        if (portEnv != null && !portEnv.isEmpty()) {
+            port = Integer.parseInt(portEnv);
+        }
+        System.out.println("[INFO] Starting server on port: " + port);
+
+        HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 
         // Auth endpoints
         server.createContext("/api/register", new AuthHandler());
