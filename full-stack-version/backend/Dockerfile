@@ -1,12 +1,17 @@
 # Stage 1: Build with Maven
 FROM maven:3.9-eclipse-temurin-21 AS build
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
-RUN mvn clean package -DskipTests
 
-# Stage 2: Run with Java
-FROM eclipse-temurin:21-jre
+# Copy pom.xml first to cache dependencies
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+
+# Copy source and build
+COPY src ./src
+RUN mvn clean package -DskipTests -B -q
+
+# Stage 2: Run with Java (slim JRE image)
+FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 COPY --from=build /app/target/personal-diary-backend-1.0-jar-with-dependencies.jar app.jar
 
@@ -14,4 +19,4 @@ COPY --from=build /app/target/personal-diary-backend-1.0-jar-with-dependencies.j
 RUN mkdir -p /app/backups
 
 EXPOSE 8080
-CMD ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
