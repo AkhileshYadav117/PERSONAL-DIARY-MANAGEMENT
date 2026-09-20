@@ -85,7 +85,7 @@ class _FileScreenState extends State<FileScreen> {
   void _triggerDownload(String content, String filename, String mimeType) {
     final bytes = html.Blob([content], mimeType);
     final url = html.Url.createObjectUrlFromBlob(bytes);
-    final anchor = html.AnchorElement(href: url)
+    html.AnchorElement(href: url)
       ..setAttribute('download', filename)
       ..click();
     html.Url.revokeObjectUrl(url);
